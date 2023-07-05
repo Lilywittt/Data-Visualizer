@@ -28,10 +28,19 @@ class MainWindow(QMainWindow):
         y_data2 = y_data2.compute()
         y_data3 = y_data3.compute()
 
+        power_data = 2250 * y_data3 * (y_data0 + y_data1 + y_data2)
+
+        y_data0 = y_data0 * 25
+        y_data1 = y_data1 * 25
+        y_data2 = y_data2 * 25
+        y_data3 = y_data3 * 90
+
         fig0 = go.Figure(data=go.Scatter(x=x_data, y=y_data0, mode='lines'), layout_title_text='Ai0')
         fig1 = go.Figure(data=go.Scatter(x=x_data, y=y_data1, mode='lines'), layout_title_text='Ai1')
         fig2 = go.Figure(data=go.Scatter(x=x_data, y=y_data2, mode='lines'), layout_title_text='Ai2')
         fig3 = go.Figure(data=go.Scatter(x=x_data, y=y_data3, mode='lines'), layout_title_text='Ai3')
+
+        fig_power = go.Figure(data=go.Scatter(x=x_data, y=power_data, mode='lines'), layout_title_text='Power')
 
         # Specify the output folder in the project directory
         output_folder = "output"
@@ -44,12 +53,14 @@ class MainWindow(QMainWindow):
         fig1_file = os.path.join(output_folder, 'fig1.html')
         fig2_file = os.path.join(output_folder, 'fig2.html')
         fig3_file = os.path.join(output_folder, 'fig3.html')
+        fig_power_file = os.path.join(output_folder, 'fig_power.html')
 
         # Save figures as HTML files
         fig0.write_html(fig0_file)
         fig1.write_html(fig1_file)
         fig2.write_html(fig2_file)
         fig3.write_html(fig3_file)
+        fig_power.write_html(fig_power_file)
 
         # Create QWebEngineView widgets
         self.browser0 = QWebEngineView()
